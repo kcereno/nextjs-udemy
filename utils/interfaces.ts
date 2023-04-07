@@ -7,3 +7,9 @@ export interface Event {
   image: string;
   isFeatured: boolean;
 }
+
+export interface Product {
+  id: string;
+  title: string;
+  description: string;
+}

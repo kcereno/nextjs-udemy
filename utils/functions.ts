@@ -1,4 +1,6 @@
-import { Event } from '../utils/interfaces';
+import { Event, Product } from '../utils/interfaces';
+import fs from 'fs/promises';
+import path from 'path';
 
 import { DUMMY_EVENTS } from '../dummy-data';
 
@@ -24,3 +26,11 @@ export function getFilteredEvents(year: number, month: number) {
 export function getEventById(id: string) {
   return DUMMY_EVENTS.find((event) => event.id === id);
 }
+
+export const getData = async () => {
+  const filePath = path.join(process.cwd(), 'data', 'backend.json');
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData.toString());
+
+  return data;
+};
