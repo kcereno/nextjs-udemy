@@ -5,7 +5,7 @@ interface Props {
 export default function HomePage({ featuredEvents }: Props) {
   return (
     <>
-      <h1>Hello</h1>
+      <h1>test</h1>
     </>
   );
 }
