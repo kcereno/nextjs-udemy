@@ -5,6 +5,7 @@ import { getEventById, getFeaturedEvents } from '@/helpers/api-util';
 import ErrorAlert from '@/ui/error-alert';
 import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 import { Event } from '@/utils/interfaces';
+import Head from 'next/head';
 
 interface Props {
   event: Event;
@@ -15,6 +16,13 @@ const EventDetailPage = ({ event }: Props) => {
 
   return (
     <>
+      <Head>
+        <title>{event.title}</title>
+        <meta
+          name="description"
+          content={event.description}
+        />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}

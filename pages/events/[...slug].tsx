@@ -8,6 +8,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Event } from '@/utils/interfaces';
+import Head from 'next/head';
 
 interface Props {
   hasError?: boolean;
@@ -34,9 +35,20 @@ const FilteredEventsPage = ({
   // const numYear = +filteredYear;
   // const numMonth = +filteredMonth;
 
+  const pageHeadData = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`All events for ${month}/${year}`}
+      />
+    </Head>
+  );
+
   if (hasError)
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p className="py-10 text-center">
             Invalid Filter. Please adjust your values!
@@ -53,6 +65,7 @@ const FilteredEventsPage = ({
   if (!filteredEvents || filteredEvents.length === 0)
     return (
       <>
+        {pageHeadData}
         <ErrorAlert>
           <p className="py-10 text-center">
             No events found for the chosen filter!
@@ -68,6 +81,7 @@ const FilteredEventsPage = ({
 
   return (
     <>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList events={filteredEvents} />
     </>
