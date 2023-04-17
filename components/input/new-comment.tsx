@@ -1,19 +1,23 @@
 import { useRef, useState } from 'react';
 import classes from './new-comment.module.css';
 
-function NewComment(props) {
+interface Props {
+  onAddComment: (comment: any) => void;
+}
+
+function NewComment({ onAddComment }: Props) {
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const emailInputRef = useRef();
-  const nameInputRef = useRef();
-  const commentInputRef = useRef();
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const commentInputRef = useRef<HTMLInputElement>(null);
 
-  function sendCommentHandler(event) {
+  function sendCommentHandler(event: React.FormEvent) {
     event.preventDefault();
 
-    const enteredEmail = emailInputRef.current.value;
-    const enteredName = nameInputRef.current.value;
-    const enteredComment = commentInputRef.current.value;
+    const enteredEmail = emailInputRef.current?.value;
+    const enteredName = nameInputRef.current?.value;
+    const enteredComment = commentInputRef.current?.value;
 
     if (
       !enteredEmail ||
@@ -28,7 +32,7 @@ function NewComment(props) {
       return;
     }
 
-    props.onAddComment({
+    onAddComment({
       email: enteredEmail,
       name: enteredName,
       text: enteredComment,
