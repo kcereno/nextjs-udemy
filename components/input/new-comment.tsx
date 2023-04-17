@@ -10,7 +10,7 @@ function NewComment({ onAddComment }: Props) {
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
-  const commentInputRef = useRef<HTMLInputElement>(null);
+  const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
   function sendCommentHandler(event: React.FormEvent) {
     event.preventDefault();
@@ -63,9 +63,9 @@ function NewComment({ onAddComment }: Props) {
         <label htmlFor="comment">Your comment</label>
         <textarea
           id="comment"
-          rows="5"
+          rows={5}
           ref={commentInputRef}
-        ></textarea>
+        />
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
       <button>Submit</button>
