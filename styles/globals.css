@@ -5,3 +5,14 @@
 h1 {
   @apply text-4xl font-bold;
 }
+
+input {
+  @apply p-2 border border-gray-300 rounded-md;
+}
+
+textarea {
+  @apply p-2 border border-gray-300 rounded-md;
+}
+button {
+  @apply p-2 bg-blue-500 border rounded-md;
+}
