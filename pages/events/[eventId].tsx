@@ -6,6 +6,7 @@ import ErrorAlert from '@/ui/error-alert';
 import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 import { Event } from '@/utils/interfaces';
 import Head from 'next/head';
+import Comments from '@/components/input/comments';
 
 interface Props {
   event: Event;
@@ -33,6 +34,7 @@ const EventDetailPage = ({ event }: Props) => {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
     </>
   );
 };

@@ -3,7 +3,6 @@ import ResultsTitle from '@/components/events/results-title';
 import { getFilteredEvents } from '@/helpers/api-util';
 import Button from '@/ui/Button';
 import ErrorAlert from '@/ui/error-alert';
-
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
