@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CommentList from './comment-list';
 import NewComment from './new-comment';
 import classes from './comments.module.css';
+import { Comment } from '@/models/interfaces';
 
 interface Props {
   eventId: string;
@@ -15,8 +16,23 @@ function Comments({ eventId }: Props) {
     setShowComments((prevStatus) => !prevStatus);
   }
 
-  function addCommentHandler(commentData: any) {
-    // send data to API
+  async function addCommentHandler({ email, name, text }: Comment) {
+    const newComment: Comment = {
+      email,
+      name,
+      text,
+    };
+
+    const response = await fetch('/api/comments/' + eventId, {
+      method: 'POST',
+      body: JSON.stringify(newComment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    console.log('addCommentHandler ~ data:', data);
   }
 
   return (
