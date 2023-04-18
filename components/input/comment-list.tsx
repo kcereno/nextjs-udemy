@@ -1,21 +1,22 @@
 import classes from './comment-list.module.css';
+import { Comment } from '@/models/interfaces';
 
-function CommentList() {
+interface Props {
+  comments: Comment[];
+}
+
+function CommentList({ comments }: Props) {
   return (
     <ul className={classes.comments}>
       {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      {comments.map((comment) => (
+        <li key={comment.id}>
+          <p>{comment.text}</p>
+          <div className="">
+            By <address>{comment.name}</address>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }
