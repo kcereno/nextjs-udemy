@@ -31,6 +31,7 @@ function Comments({ eventId }: Props) {
       email,
       name,
       text,
+      eventId,
     };
 
     const apiPath = '/api/comments/' + eventId;

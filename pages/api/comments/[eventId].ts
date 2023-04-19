@@ -1,16 +1,19 @@
+import { addCommentToCollection } from '@/helpers/mongo';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { MongoClient } from 'mongodb';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    const { email, name, text } = req.body;
+    const { email, name, text, eventId } = req.body;
 
     const newComment = {
-      id: new Date().toISOString(),
       email,
       name,
       text,
+      eventId,
     };
-    console.log('handler ~ newCommnent:', newComment);
+
+    addCommentToCollection(newComment);
 
     res.status(201).json({ message: 'New comment added', comment: newComment });
   }
