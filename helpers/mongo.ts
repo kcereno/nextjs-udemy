@@ -21,10 +21,22 @@ export const addCommentToCollection = async (comment: Comment) => {
   const client = await connectToDb();
   const db = client.db('events');
 
-  const result = await db
-    .collection('comments')
-    .insertOne({ comment: comment });
+  const result = await db.collection('comments').insertOne(comment);
   console.log('addCommentToCollection ~ result:', result);
 
   client.close();
+};
+
+export const getAllComments = async () => {
+  const client = await connectToDb();
+  const collection = client.db('events').collection('comments');
+
+  const documents = await collection
+    .find()
+    .sort({
+      _id: -1,
+    })
+    .toArray();
+
+  return documents;
 };

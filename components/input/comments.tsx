@@ -18,7 +18,13 @@ function Comments({ eventId }: Props) {
       // fetch data
       fetch('/api/comments/' + eventId)
         .then((res) => res.json())
-        .then((data) => setComments(data.comments));
+        .then((data) => {
+          const eventComments = data.comments.filter(
+            (comment: any) => comment.eventId === eventId
+          );
+
+          setComments(eventComments);
+        });
     }
   }, [showComments, eventId]);
 

@@ -1,4 +1,4 @@
-import { addCommentToCollection } from '@/helpers/mongo';
+import { addCommentToCollection, getAllComments } from '@/helpers/mongo';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 
@@ -19,19 +19,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'GET') {
-    const dummyList = [
-      {
-        id: 'c1',
-        name: 'Max',
-        text: 'A first comment!',
-      },
-      {
-        id: 'c2',
-        name: 'Manuel',
-        text: 'A second comment!',
-      },
-    ];
-    res.status(200).json({ comments: dummyList });
+    const fetchedComments = await getAllComments();
+    console.log('handler ~ fetchedComments:', fetchedComments);
+
+    res.status(200).json({ comments: fetchedComments });
   }
 };
 
