@@ -20,7 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const fetchedComments = await getAllComments();
-    console.log('handler ~ fetchedComments:', fetchedComments);
 
     res.status(200).json({ comments: fetchedComments });
   }
