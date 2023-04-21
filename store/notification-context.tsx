@@ -27,7 +27,7 @@ export const NotificationContextProvider = ({ children }: Props) => {
   };
 
   const contextValues = {
-    notification: null,
+    notification: activeNotification,
     showNotification: handleShowNotification,
     hideNofitfication: handleHideNotification,
   };
