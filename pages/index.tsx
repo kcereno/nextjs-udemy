@@ -1,3 +1,6 @@
+import FeaturedPosts from '@/components/HomePage/FeaturedPosts';
+import Hero from '@/components/HomePage/Hero';
+
 interface Props {
   featuredEvents: Event[];
 }
@@ -5,7 +8,8 @@ interface Props {
 export default function HomePage() {
   return (
     <>
-      <h1>Hello</h1>
+      <Hero />
+      <FeaturedPosts />
     </>
   );
 }
