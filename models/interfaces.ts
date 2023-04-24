@@ -3,6 +3,7 @@ export interface Comment {
   name: string;
   text: string;
   eventId: string;
+  _id?: string;
 }
 
 export interface NotificationDataInterface {

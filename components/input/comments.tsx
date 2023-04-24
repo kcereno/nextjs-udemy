@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import CommentList from './comment-list';
 import NewComment from './new-comment';
 import classes from './comments.module.css';
 import { Comment } from '@/models/interfaces';
+import NotificationContext from '@/store/notification-context';
 
 interface Props {
   eventId: string;
@@ -12,6 +13,9 @@ interface Props {
 function Comments({ eventId }: Props) {
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
+
+  const { showNotification, hideNotification } =
+    useContext(NotificationContext);
 
   useEffect(() => {
     if (showComments) {
@@ -40,18 +44,35 @@ function Comments({ eventId }: Props) {
       eventId,
     };
 
-    const apiPath = '/api/comments/' + eventId;
-
-    const response = await fetch(apiPath, {
-      method: 'POST',
-      body: JSON.stringify(commentData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    showNotification({
+      title: 'Submitted',
+      message: 'Pending',
+      status: 'pending',
     });
 
-    const data = await response.json();
-    console.log('addCommentHandler ~ data:', data);
+    const apiPath = '/api/comments/' + eventId;
+
+    try {
+      const response = await fetch(apiPath, {
+        method: 'POST',
+        body: JSON.stringify(commentData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('addCommentHandler ~ response:', response);
+
+      const data = await response.json();
+      console.log('addCommentHandler ~ data:', data);
+
+      showNotification({
+        title: 'Success',
+        message: data.message,
+        status: 'success',
+      });
+    } catch (error) {
+      console.log('addCommentHandler ~ error:', error);
+    }
   }
 
   return (
