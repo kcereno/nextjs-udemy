@@ -2,7 +2,7 @@ import {
   NotificationContextInterface,
   NotificationDataInterface,
 } from '@/models/interfaces';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 const NotificationContext = createContext<NotificationContextInterface>(
   {} as NotificationContextInterface
@@ -15,6 +15,21 @@ interface Props {
 export const NotificationContextProvider = ({ children }: Props) => {
   const [activeNotification, setActiveNotification] =
     useState<NotificationDataInterface | null>(null);
+
+  useEffect(() => {
+    if (
+      (activeNotification && activeNotification.status === 'success') ||
+      activeNotification?.status === 'error'
+    ) {
+      const timer = setTimeout(() => {
+        setActiveNotification(null);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [activeNotification]);
 
   const handleShowNotification = (
     notificationData: NotificationDataInterface
@@ -29,7 +44,7 @@ export const NotificationContextProvider = ({ children }: Props) => {
   const contextValues = {
     notification: activeNotification,
     showNotification: handleShowNotification,
-    hideNofitfication: handleHideNotification,
+    hideNotification: handleHideNotification,
   };
 
   return (

@@ -14,5 +14,5 @@ export interface NotificationDataInterface {
 export interface NotificationContextInterface {
   notification: NotificationDataInterface | null;
   showNotification: (notificationData: NotificationDataInterface) => void;
-  hideNofitfication: () => void;
+  hideNotification: () => void;
 }
