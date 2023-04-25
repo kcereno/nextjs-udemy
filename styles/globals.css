@@ -66,3 +66,7 @@ button {
   font: inherit;
   cursor: pointer;
 }
+
+h1 {
+  @apply text-4xl;
+}
