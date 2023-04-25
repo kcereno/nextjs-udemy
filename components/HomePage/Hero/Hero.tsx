@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Hero.module.css';
 import Image from 'next/image';
-import avatar from '../../public/images/site/cats.png';
+import avatar from '../../../public/images/site/cats.png';
 
 const Hero = () => {
   return (
