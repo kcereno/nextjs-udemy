@@ -2,6 +2,7 @@ import React from 'react';
 import style from './PostsGrid.module.css';
 import PostItem from '../PostItem/PostItem';
 import { PostI } from '@/models/interfaces';
+import styles from './PostsGrid.module.css';
 
 interface Props {
   posts: PostI[];
@@ -9,10 +10,10 @@ interface Props {
 
 const PostsGrid = ({ posts }: Props) => {
   return (
-    <ul>
+    <ul className={styles.grid}>
       {posts.map((post) => (
         <PostItem
-          key={post.title}
+          key={post.slug}
           post={post}
         />
       ))}
