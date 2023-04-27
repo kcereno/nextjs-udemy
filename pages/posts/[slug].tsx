@@ -28,7 +28,6 @@ export const getStaticPaths = () => {
   const postFileNames = getPostsFiles();
 
   const slugs = postFileNames.map((fileName) => createSlug(fileName));
-  console.log('getStaticPaths ~ slugs:', slugs);
 
   return {
     paths: slugs.map((slug) => ({ params: { slug } })),

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import React from 'react';
 import styles from './PostContent.module.css';
 import PostHeader from '../PostHeader/PostHeader';
@@ -5,6 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import { PostDataI } from '@/models/interfaces';
 import Image from 'next/image';
 import classes from './PostContent.module.css';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 interface PropsI {
   post: PostDataI;
@@ -13,10 +16,8 @@ interface PropsI {
 const PostContent = ({ post: { slug, image, title, content } }: PropsI) => {
   const imagePath = `/images/posts/${slug}/${image}`;
 
-  console.log('PostContent ~ imagePath:', imagePath);
-
   const customRenderers = {
-    p(paragraph) {
+    p(paragraph: any) {
       const { node } = paragraph;
 
       if (node.children[0].tagName === 'img') {
@@ -37,17 +38,18 @@ const PostContent = ({ post: { slug, image, title, content } }: PropsI) => {
       return <p>{paragraph.children}</p>;
     },
 
-    // code(code) {
-    //   const { className, children } = code;
-    //   const language = className.split('-')[1]; // className is something like language-js => We need the "js" part here
-    //   return (
-    //     <SyntaxHighlighter
-    //       style={atomDark}
-    //       language={language}
-    //       children={children}
-    //     />
-    //   );
-    // },
+    code(code: any) {
+      console.log('code ~ code:', code);
+      console.log('code ~ code:', code.className);
+
+      return (
+        <SyntaxHighlighter
+          language="js"
+          children={code.children}
+          style={atomDark}
+        />
+      );
+    },
   };
   return (
     <article className={styles.content}>
