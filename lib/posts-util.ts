@@ -7,16 +7,16 @@ import { PostDataI } from '@/models/interfaces';
 
 const postDirectory = path.join(process.cwd(), 'posts');
 
-const getPostData = (fileName: string) => {
-  const filePath = path.join(postDirectory, fileName);
+export const getPostData = (postId: string) => {
+  const postSlug = createSlug(postId);
+
+  const filePath = path.join(postDirectory, `${postSlug}.md`);
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
   const {
     data: { title, date, image, excerpt, isFeatured },
     content,
   } = matter(fileContent);
-
-  const postSlug = createSlug(fileName);
 
   const postData: PostDataI = {
     slug: postSlug,
@@ -31,8 +31,10 @@ const getPostData = (fileName: string) => {
   return postData;
 };
 
+export const getPostsFiles = () => fs.readdirSync(postDirectory);
+
 export const getAllPosts = () => {
-  const postFiles = fs.readdirSync(postDirectory);
+  const postFiles = getPostsFiles();
 
   const allPosts = postFiles.map((postFile) => getPostData(postFile));
 
