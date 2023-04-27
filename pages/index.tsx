@@ -1,40 +1,28 @@
 import FeaturedPosts from '@/components/HomePage/FeaturedPosts/FeaturedPosts';
 import Hero from '@/components/HomePage/Hero/Hero';
 import { PostI } from '../models/interfaces';
+import { getFeaturedPosts } from '@/lib/posts-util';
 
 interface Props {
-  featuredEvents: Event[];
+  posts: PostI[];
 }
 
-export default function HomePage() {
-  const DUMMY_POSTS: PostI[] = [
-    {
-      title: 'Test',
-      image: 'getting-started-nextjs.png',
-      excerpt: 'test',
-      slug: 'getting-started-nextjs',
-      date: new Date(),
-    },
-    {
-      title: 'Test',
-      image: 'getting-started-nextjs.png',
-      excerpt: 'test',
-      slug: 'getting-started-nextjs',
-      date: new Date(),
-    },
-    {
-      title: 'Test',
-      image: 'getting-started-nextjs.png',
-      excerpt: 'test',
-      slug: 'getting-started-nextjs',
-      date: new Date(),
-    },
-  ];
-
+export default function HomePage({ posts }: Props) {
   return (
     <>
       <Hero />
-      <FeaturedPosts posts={DUMMY_POSTS} />
+      <FeaturedPosts posts={posts} />
     </>
   );
 }
+
+export const getStaticProps = () => {
+  const featuredPosts = getFeaturedPosts();
+  console.log('getStaticProps ~ featuredPosts:', featuredPosts);
+
+  return {
+    props: {
+      posts: featuredPosts,
+    },
+  };
+};

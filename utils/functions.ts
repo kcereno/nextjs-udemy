@@ -4,3 +4,5 @@ export const formatDate = (date: Date) =>
     month: 'long',
     year: 'numeric',
   });
+
+export const createSlug = (string: string) => string.replace(/\.md$/, '');
