@@ -15,3 +15,9 @@ export interface PostDataI {
   isFeatured: boolean;
   content: any;
 }
+
+export interface ContactDataI {
+  email: string;
+  name: string;
+  message: string;
+}
