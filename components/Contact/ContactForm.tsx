@@ -1,34 +1,77 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import styles from './ContactForm.module.css';
+import { RequestStatus } from '@/models/types';
+import { sendContactData } from '@/lib/contact-utils';
+import { INotificationData } from '@/models/interfaces';
+import Error from 'next/error';
+import Notification from '@/ui/notification';
+import { request } from 'http';
 
 const ContactForm = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState();
-  console.log('ContactForm ~ status:', status);
+
+  const [requestStatus, setRequestStatus] = useState<RequestStatus | null>();
+  const [requestError, setRequestError] = useState<string | null>();
+
+  useEffect(() => {
+    if (requestStatus === 'success' || requestStatus === 'error') {
+      const timer = setTimeout(() => {
+        setRequestStatus(null);
+        setRequestError(null);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [requestStatus]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify({
+    setRequestStatus('pending');
+
+    try {
+      await sendContactData({
         email,
         name,
         message,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log('handleSubmit ~ response:', response);
-
-    if (response.status) {
-      const { message } = await response.json();
-      setStatus(message);
+      });
+      setRequestStatus('success');
+    } catch (error: any) {
+      setRequestError(error.message as string);
+      setRequestStatus('error');
+      console.log(error);
     }
   };
+
+  let notificationData: INotificationData = {} as INotificationData;
+
+  if (requestStatus === 'pending') {
+    notificationData = {
+      status: 'pending',
+      title: 'sending message',
+      message: 'your message is on its way',
+    };
+  }
+
+  if (requestStatus === 'success') {
+    notificationData = {
+      status: 'success',
+      title: 'Success',
+      message: 'Message send successfully.',
+    };
+  }
+
+  if (requestStatus === 'error') {
+    notificationData = {
+      status: 'error',
+      title: 'Error',
+      message: requestError as string,
+    };
+  }
 
   return (
     <section className={styles.contact}>
@@ -79,7 +122,13 @@ const ContactForm = () => {
           <button type="submit">Send Message</button>
         </div>
       </form>
-      {status === 'Success' && <p>Success</p>}
+      {notificationData && (
+        <Notification
+          status={notificationData.status}
+          title={notificationData.title}
+          message={notificationData.message}
+        />
+      )}
     </section>
   );
 };

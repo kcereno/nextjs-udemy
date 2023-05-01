@@ -3,7 +3,7 @@ import path from 'path';
 
 import matter from 'gray-matter';
 import { createSlug } from '@/utils/functions';
-import { PostDataI } from '@/models/interfaces';
+import { IPostData } from '@/models/interfaces';
 
 const postDirectory = path.join(process.cwd(), 'posts');
 
@@ -18,7 +18,7 @@ export const getPostData = (postId: string) => {
     content,
   } = matter(fileContent);
 
-  const postData: PostDataI = {
+  const postData: IPostData = {
     slug: postSlug,
     title,
     date,

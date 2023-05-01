@@ -1,4 +1,6 @@
-export interface PostI {
+import { RequestStatus } from './types';
+
+export interface IPost {
   title: string;
   image: string;
   excerpt: string;
@@ -6,7 +8,7 @@ export interface PostI {
   slug: string;
 }
 
-export interface PostDataI {
+export interface IPostData {
   slug: string;
   title: string;
   date: string;
@@ -16,8 +18,20 @@ export interface PostDataI {
   content: any;
 }
 
-export interface ContactDataI {
+export interface IContactData {
   email: string;
   name: string;
+  message: string;
+}
+
+export interface IContactDetails {
+  email: string;
+  name: string;
+  message: string;
+}
+
+export interface INotificationData {
+  status: RequestStatus;
+  title: string;
   message: string;
 }
