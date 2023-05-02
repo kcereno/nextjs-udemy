@@ -1,15 +1,23 @@
 import FeaturedPosts from '@/components/HomePage/FeaturedPosts/FeaturedPosts';
 import Hero from '@/components/HomePage/Hero/Hero';
-import { PostI } from '../models/interfaces';
+import { IPost } from '../models/interfaces';
 import { getFeaturedPosts } from '@/lib/posts-util';
+import Head from 'next/head';
 
 interface Props {
-  posts: PostI[];
+  posts: IPost[];
 }
 
 export default function HomePage({ posts }: Props) {
   return (
     <>
+      <Head>
+        <title>Karl blog</title>
+        <meta
+          name="description"
+          content="I make stuff"
+        />
+      </Head>
       <Hero />
       <FeaturedPosts posts={posts} />
     </>
