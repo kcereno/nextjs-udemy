@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './PostItem.module.css';
 import Link from 'next/link';
 import Image from 'next/legacy/image';
-import { PostI } from '@/models/interfaces';
+import { IPost } from '@/models/interfaces';
 import { formatDate } from '@/utils/functions';
 
 interface Props {
-  post: PostI;
+  post: IPost;
 }
 
 const PostItem = ({ post: { title, image, excerpt, date, slug } }: Props) => {

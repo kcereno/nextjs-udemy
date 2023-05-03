@@ -1,11 +1,11 @@
 import React from 'react';
 import style from './PostsGrid.module.css';
 import PostItem from '../PostItem/PostItem';
-import { PostI } from '@/models/interfaces';
+import { IPost } from '@/models/interfaces';
 import styles from './PostsGrid.module.css';
 
 interface Props {
-  posts: PostI[];
+  posts: IPost[];
 }
 
 const PostsGrid = ({ posts }: Props) => {
